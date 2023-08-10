@@ -207,6 +207,5 @@ function createMaze(x, y) {
     [1, 0],
     [0, -1],
   ];
-
   function generateMaze(x, y) {}
 }
