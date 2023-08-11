@@ -1,132 +1,13 @@
 let field = document.querySelector(".field");
 
-const matrix = [
-  [
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-  ],
-  [
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-  ],
-  [
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-  ],
-  [
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-  ],
-  [
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-  ],
-  [
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-  ],
-  [
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-  ],
-  [
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-  ],
-  [
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-  ],
-  [
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-    [1, 1, 1, 1],
-  ],
-];
-
+const matrix = Array.from({ length: 10 }, () =>
+  Array.from({ length: 10 }, () => Array.from({ length: 4 }, () => 1))
+);
 //logic
 
 //logic
 
+let dimensions = 11;
 for (let i = 0; i < 10; i++) {
   for (j = 0; j < 10; j++) {
     for (k = 0; k < 4; k++) {}
@@ -146,10 +27,18 @@ class Square {
   create(i, j) {
     let dot = document.createElement("div");
     dot.className = "dot";
-    dot.style.borderTop = `solid black ${this.top}px `;
-    dot.style.borderLeft = `solid black ${this.left}px `;
-    dot.style.borderRight = `solid black ${this.right}px `;
-    dot.style.borderBottom = `solid black ${this.bottom}px `;
+    if (i != 0) {
+      dot.style.borderTop = `solid black ${this.top}px `;
+    }
+
+    j != 0 ? (dot.style.borderLeft = `solid black ${this.left}px `) : "";
+
+    if (j != 10 - 1) {
+      dot.style.borderRight = `solid black ${this.right}px `;
+    }
+    if (i != 10 - 1) {
+      dot.style.borderBottom = `solid black ${this.bottom}px `;
+    }
 
     return dot;
   }
@@ -165,16 +54,13 @@ for (i = 0; i < 10; i++) {
   field.append(kolona);
 }
 
-// Exit
-
 let randomX = Math.floor(Math.random() * 10);
 let randomY = Math.floor(Math.random() * 10);
-field.childNodes[randomX].childNodes[randomY].style.background = "red";
+let end = (field.childNodes[randomX].childNodes[randomY].className = "end");
 
 //
 //Start
 
-field.childNodes[0].childNodes[0].style.background = "yellow";
 duzina = field.childNodes.length;
 //
 function createMaze(x, y) {
@@ -194,14 +80,21 @@ function createMaze(x, y) {
     [0, -1],
   ];
   let komsiluk = 100;
+  let k = 100;
+
+  //generateMAze
+  let backtrack=[];
   function generateMaze(x, y) {
     let help = 0;
     if (komsiluk <= 1) {
       console.log("kraj!!!!!");
       return;
     }
+    k--;
 
-    console.log(komsiluk);
+    console.log(komsiluk, k);
+    
+
     for (let s = 0; s < 4; s++) {
       const [move1, move2] =
         directions[Math.floor(Math.random() * directions.length)];
@@ -218,6 +111,8 @@ function createMaze(x, y) {
         komsiluk--;
 
         visited[newX][newY] = 1;
+        backtrack.push([newX,newY]);
+
         if (y < newY) {
           field.childNodes[newX].childNodes[newY].style.borderLeft =
             "0px solid red";
@@ -245,9 +140,10 @@ function createMaze(x, y) {
         }, 10);
       }
     }
-    if (help == 0 && komsiluk > 1) {
+    if (help == 0 && komsiluk > 1 && backtrack.length > 0) {
+      const [prevX, prevY] = backtrack.pop();
       setTimeout(() => {
-        generateMaze(x, y);
+        generateMaze(prevX, prevY);
       }, 10);
     }
   }
@@ -256,3 +152,62 @@ function createMaze(x, y) {
 }
 
 createMaze(0, 0);
+
+////
+let start = field.childNodes[0].childNodes[0];
+start.className = "start";
+
+let pos1 = 5;
+let pos2 = 5;
+
+window.addEventListener("keydown", function (event) {
+  switch (event.key) {
+    case "ArrowUp":
+      if (pos1 > 0) {
+        pos1--;
+        MoveMe(pos1, pos2);
+      } else {
+        this.alert("NEEEEEEEEEE!");
+      }
+      break;
+    case "ArrowDown":
+      if (pos1 < 9) {
+        pos1++;
+        MoveMe(pos1, pos2);
+      } else {
+        this.alert("NEEEEEEEEEE!");
+      }
+      console.log("down");
+      break;
+    case "ArrowLeft":
+      if (pos2 > 0) {
+        pos2--;
+        MoveMe(pos1, pos2);
+      } else {
+        this.alert("NEEEEEEEEEE!");
+      }
+      // Handle arrow left key press
+      break;
+    case "ArrowRight":
+      if (pos2 < 9) {
+        ``;
+        pos2++;
+        MoveMe(pos1, pos2);
+      } else {
+        this.alert("NEEEEEEEEEE!");
+      }
+      // Handle arrow right key press
+      break;
+    default:
+      // Handle other key presses
+      break;
+  }
+});
+
+function MoveMe(pos1, pos2) {
+  field.querySelector(".start").classList.add("dot")
+  field.querySelector(".start").classList.remove("start");
+
+  field.childNodes[pos1].childNodes[pos2].className = "start";
+}
+// Exit
