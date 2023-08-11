@@ -150,7 +150,6 @@ class Square {
     dot.style.borderLeft = `solid black ${this.left}px `;
     dot.style.borderRight = `solid black ${this.right}px `;
     dot.style.borderBottom = `solid black ${this.bottom}px `;
-    dot.innerText = `${j}`;
 
     return dot;
   }
@@ -166,27 +165,18 @@ for (i = 0; i < 10; i++) {
   field.append(kolona);
 }
 
-duzina = field.childNodes.length;
-for (l = 0; l < 10; l++) {
-  for (i = 0; i < 10; i++) {
-    if (
-      l + 1 < 10 &&
-      parseInt(field.childNodes[l].childNodes[i].style.borderBottom[0]) &&
-      parseInt(field.childNodes[l + 1].childNodes[i].style.borderTop[0])
-    ) {
-      console.log(l, i);
-      field.childNodes[l].childNodes[i].style.borderBottom = "0px solid black";
-    }
-    if (
-      i + 1 < 10 &&
-      parseInt(field.childNodes[l].childNodes[i].style.borderRight[0]) &&
-      parseInt(field.childNodes[l].childNodes[i + 1].style.borderLeft[0])
-    ) {
-      field.childNodes[l].childNodes[i].style.borderRight = "0px solid black";
-    }
-  }
-}
+// Exit
 
+let randomX = Math.floor(Math.random() * 10);
+let randomY = Math.floor(Math.random() * 10);
+field.childNodes[randomX].childNodes[randomY].style.background = "red";
+
+//
+//Start
+
+field.childNodes[0].childNodes[0].style.background = "yellow";
+duzina = field.childNodes.length;
+//
 function createMaze(x, y) {
   let visited = [];
   for (let i = 0; i < 10; i++) {
@@ -195,17 +185,74 @@ function createMaze(x, y) {
       visited[i][j] = 0;
     }
   }
-
   visited[x][y] = 1;
-  // proveriti da li su komsije izabranog pocetnog polja posecene,
-  //   napraviit da svaki put biramo random komsiju koji ako nije posecen ,
-  //    brisemo zid izmedju njega i naseg polja ,ako su jedan pored drugog brisemo levi ili desni zid ,
-  //    ako su jedan ispod drugog brisemo gornji ili donji stub
+
   directions = [
     [-1, 0],
     [0, 1],
     [1, 0],
     [0, -1],
   ];
-  function generateMaze(x, y) {}
+  let komsiluk = 100;
+  function generateMaze(x, y) {
+    let help = 0;
+    if (komsiluk <= 1) {
+      console.log("kraj!!!!!");
+      return;
+    }
+
+    console.log(komsiluk);
+    for (let s = 0; s < 4; s++) {
+      const [move1, move2] =
+        directions[Math.floor(Math.random() * directions.length)];
+      const newX = x + move1;
+      const newY = y + move2;
+      if (
+        newY < 10 &&
+        newX < 10 &&
+        newX >= 0 &&
+        newY >= 0 &&
+        !visited[newX][newY]
+      ) {
+        help++;
+        komsiluk--;
+
+        visited[newX][newY] = 1;
+        if (y < newY) {
+          field.childNodes[newX].childNodes[newY].style.borderLeft =
+            "0px solid red";
+          field.childNodes[newX].childNodes[y].style.borderRight =
+            "0px solid red";
+        } else if (x < newX) {
+          field.childNodes[x].childNodes[newY].style.borderBottom =
+            "0px solid blue";
+          field.childNodes[newX].childNodes[newY].style.borderTop =
+            "0px solid blue";
+        }
+        if (y > newY) {
+          field.childNodes[newX].childNodes[newY].style.borderRight =
+            "0px solid red";
+          field.childNodes[newX].childNodes[y].style.borderLeft =
+            "0px solid red";
+        } else if (x > newX) {
+          field.childNodes[x].childNodes[newY].style.borderTop =
+            "0px solid blue";
+          field.childNodes[newX].childNodes[newY].style.borderBottom =
+            "0px solid blue";
+        }
+        setTimeout(() => {
+          generateMaze(newX, newY);
+        }, 10);
+      }
+    }
+    if (help == 0 && komsiluk > 1) {
+      setTimeout(() => {
+        generateMaze(x, y);
+      }, 10);
+    }
+  }
+
+  generateMaze(x, y);
 }
+
+createMaze(0, 0);
