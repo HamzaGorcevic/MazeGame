@@ -39,6 +39,7 @@ class Square {
     if (i != 10 - 1) {
       dot.style.borderBottom = `solid black ${this.bottom}px `;
     }
+    dot.innerHTML = `${j}`;
 
     return dot;
   }
@@ -83,17 +84,13 @@ function createMaze(x, y) {
   let k = 100;
 
   //generateMAze
-  let backtrack=[];
+  let backtrack = [];
   function generateMaze(x, y) {
     let help = 0;
     if (komsiluk <= 1) {
-      console.log("kraj!!!!!");
       return;
     }
     k--;
-
-    console.log(komsiluk, k);
-    
 
     for (let s = 0; s < 4; s++) {
       const [move1, move2] =
@@ -111,7 +108,7 @@ function createMaze(x, y) {
         komsiluk--;
 
         visited[newX][newY] = 1;
-        backtrack.push([newX,newY]);
+        backtrack.push([newX, newY]);
 
         if (y < newY) {
           field.childNodes[newX].childNodes[newY].style.borderLeft =
@@ -157,44 +154,57 @@ createMaze(0, 0);
 let start = field.childNodes[0].childNodes[0];
 start.className = "start";
 
-let pos1 = 5;
-let pos2 = 5;
+let pos1 = 0;
+let pos2 = 0;
 
 window.addEventListener("keydown", function (event) {
   switch (event.key) {
     case "ArrowUp":
-      if (pos1 > 0) {
+      if (
+        pos1 > 0 &&
+        parseInt(
+          field.childNodes[pos1 - 1].childNodes[pos2].style.borderBottom[0]
+        ) == 0
+      ) {
         pos1--;
+
         MoveMe(pos1, pos2);
       } else {
-        this.alert("NEEEEEEEEEE!");
+        console.log("asd");
       }
       break;
     case "ArrowDown":
-      if (pos1 < 9) {
+      if (
+        pos1 < 9 &&
+        field.childNodes[pos1 + 1].childNodes[pos2].style.borderTop[0] == 0
+      ) {
         pos1++;
         MoveMe(pos1, pos2);
       } else {
-        this.alert("NEEEEEEEEEE!");
       }
-      console.log("down");
       break;
     case "ArrowLeft":
-      if (pos2 > 0) {
+      if (
+        pos2 > 0 &&
+        field.childNodes[pos1].childNodes[pos2 - 1].style.borderRight[0] == 0
+      ) {
         pos2--;
         MoveMe(pos1, pos2);
       } else {
-        this.alert("NEEEEEEEEEE!");
+        console.log("asd");
       }
       // Handle arrow left key press
       break;
     case "ArrowRight":
-      if (pos2 < 9) {
+      if (
+        pos2 < 9 &&
+        field.childNodes[pos1].childNodes[pos2 + 1].style.borderLeft[0] == 0
+      ) {
         ``;
         pos2++;
         MoveMe(pos1, pos2);
       } else {
-        this.alert("NEEEEEEEEEE!");
+        console.log("asd");
       }
       // Handle arrow right key press
       break;
@@ -205,7 +215,7 @@ window.addEventListener("keydown", function (event) {
 });
 
 function MoveMe(pos1, pos2) {
-  field.querySelector(".start").classList.add("dot")
+  field.querySelector(".start").classList.add("dot");
   field.querySelector(".start").classList.remove("start");
 
   field.childNodes[pos1].childNodes[pos2].className = "start";
