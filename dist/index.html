@@ -8,9 +8,27 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="h-[100vh] bg-blue-600 flex justify-center items-center">
+    <div
+      class="relative h-[100vh] w-[100%] bg-blue-600 flex justify-center items-center"
+    >
+      <div class="box">
+        <select class="dif">
+          <option selected>Chose difficulty</option>
+          <option value="Hard">Hard</option>
+          <option value="Normal">Normal</option>
+          <option value="Easy">Easy</option>
+        </select>
+      </div>
+      <div class="box-ai">
+        <select class="alg">
+          <option selected>Chose Algorithm</option>
+          <option value="BFS">BFS</option>
+          <option value=""></option>
+          <option value=""></option>
+        </select>
+      </div>
       <div
-        class="p-2 justify-center items-center field w-[510px] flex flex-wrap bg-blue-100 border-2 border-black"
+        class="text-0 p-2 justify-center items-center h-[auto] field flex flex-wrap bg-blue-100 border-2 border-black"
       ></div>
     </div>
   </body>
