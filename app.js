@@ -1,6 +1,8 @@
 let field = document.querySelector(".field");
 
 let endPos = [];
+let pos1 = 0;
+let pos2 = 0;
 function StartGame(len) {
   let dimensions = len;
 
@@ -23,6 +25,18 @@ function StartGame(len) {
 
     create(i, j) {
       let dot = document.createElement("div");
+      if (i == 0) {
+        dot.style.borderTop = "2px solid black";
+      }
+      if (j == 0) {
+        dot.style.borderLeft = "2px solid black";
+      }
+      if (i == dimensions - 1) {
+        dot.style.borderBottom = "2px solid black";
+      }
+      if (j == dimensions - 1) {
+        dot.style.borderRight = "2px solid black";
+      }
       dot.className = "dot";
       i != 0 ? (dot.style.borderTop = `solid black ${this.top}px `) : "";
 
@@ -39,11 +53,18 @@ function StartGame(len) {
     }
   }
 
+  function CountingMoves(counter) {
+    let counterH1 = document.querySelector(".counter");
+    counterH1.innerHTML = `${counter}`;
+  }
+
   function createMaze(x, y) {
     for (i = 0; i < dimensions; i++) {
       let kolona = document.createElement("div");
-      kolona.style.height = "30px";
-      field.style.width = `${dimensions * 30}px`;
+      kolona.style.height = "16px";
+
+      field.style.maxWidth = `${dimensions * 20}px`;
+      field.style.minWidth = `${dimensions * 20}px`;
 
       for (j = 0; j < dimensions; j++) {
         let kvadrat = new Square(...matrix[i][j]);
@@ -60,7 +81,6 @@ function StartGame(len) {
     field.childNodes[randomX].childNodes[randomY].classList.add("end");
     endPos.push(randomX);
     endPos.push(randomY);
-    console.log(endPos, "endPos");
     //
     //Start
 
@@ -141,9 +161,6 @@ function StartGame(len) {
       if (help == 0 && komsiluk > 0 && backtrack.length > 0) {
         const [prevX, prevY] = backtrack.pop();
         setTimeout(() => {
-          let randomX = Math.floor(Math.random() * dimensions);
-          let randomY = Math.floor(Math.random() * dimensions);
-
           generateMaze(prevX, prevY);
         }, 20);
       }
@@ -152,17 +169,30 @@ function StartGame(len) {
     generateMaze(x, y);
   }
 
-  createMaze(7, 7);
+  createMaze(0, 0);
 
+  for (r = 0; r < dimensions; r++) {
+    let randomX = Math.floor(Math.random() * (dimensions - 2)) + 1;
+    let randomY = Math.floor(Math.random() * (dimensions - 2)) + 1;
+
+    field.childNodes[randomX].childNodes[randomY].style.borderLeft =
+      "0px solid red";
+
+    field.childNodes[randomX].childNodes[randomY - 1].style.borderRight =
+      "0px solid red";
+
+    field.childNodes[randomX].childNodes[randomY].style.borderBottom =
+      "0px solid red";
+    field.childNodes[randomX + 1].childNodes[randomY].style.borderTop =
+      "0px solid red";
+  }
   ////
   let start = field.childNodes[0].childNodes[0];
   start.className = "start";
 
   // Preload the image
 
-  let pos1 = 0;
-  let pos2 = 0;
-
+  let counter = 0;
   window.addEventListener("keydown", function (event) {
     switch (event.key) {
       case "ArrowUp":
@@ -173,10 +203,11 @@ function StartGame(len) {
           ) == 0
         ) {
           pos1--;
+          counter++;
+          CountingMoves(counter);
 
           MoveMe(pos1, pos2);
         } else {
-          console.log("asd");
         }
         break;
       case "ArrowDown":
@@ -186,6 +217,8 @@ function StartGame(len) {
         ) {
           pos1++;
           MoveMe(pos1, pos2);
+          counter++;
+          CountingMoves(counter);
         } else {
         }
         break;
@@ -196,8 +229,9 @@ function StartGame(len) {
         ) {
           pos2--;
           MoveMe(pos1, pos2);
+          counter++;
+          CountingMoves(counter);
         } else {
-          console.log("asd");
         }
         // Handle arrow left key press
         break;
@@ -206,11 +240,11 @@ function StartGame(len) {
           pos2 < dimensions - 1 &&
           field.childNodes[pos1].childNodes[pos2 + 1].style.borderLeft[0] == 0
         ) {
-          ``;
           pos2++;
           MoveMe(pos1, pos2);
+          counter++;
+          CountingMoves(counter);
         } else {
-          console.log("asd");
         }
         // Handle arrow right key press
         break;
@@ -223,56 +257,64 @@ function StartGame(len) {
   function MoveMe(pos1, pos2) {
     field.querySelector(".start").classList.add("dot");
     field.querySelector(".start").classList.remove("start");
-
+    console.log(pos1, pos2);
     field.childNodes[pos1].childNodes[pos2].className = "start";
   }
 }
 // Exit
 
+let selectDif = document.querySelector(".dif");
+
+selectDif.addEventListener("keydown", function (event) {
+  switch (event.key) {
+    case "ArrowUp":
+    case "ArrowDown":
+    case "ArrowLeft":
+    case "ArrowRight":
+      event.stopPropagation();
+      break;
+    default:
+      // Handle other key presses
+      break;
+  }
+});
 function clearField() {
+  pos1 = 0;
+  pos2 = 0;
   endPos = [];
+  selectDif.selectedIndex = 0;
   while (field.firstChild) {
     field.removeChild(field.firstChild);
   }
 }
 
-let selectDif = document.querySelector(".dif");
-let dim = 20;
-StartGame(dim);
-
 selectDif.addEventListener("change", (el) => {
   switch (el.target.value) {
     case "Normal":
-      dim = 15;
+      dim = 25;
       clearField();
       StartGame(dim);
 
       break;
     case "Hard":
-      dim = 20;
+      dim = 35;
       clearField();
-      location.reload();
 
       StartGame(dim);
 
       break;
     case "Easy":
-      dim = 10;
+      dim = 15;
       clearField();
       StartGame(dim);
       break;
   }
 });
-let selectAlg = document.querySelector(".alg");
-
-selectAlg.addEventListener("change", (el) => {
-  switch (el.target.value) {
-    case "BFS":
-      findShortestPath(0, 0, dim);
-      break;
-  }
+callBot = document.querySelector(".box-ai");
+callBot.addEventListener("click", () => {
+  let h1Counted = document.querySelector(".counted");
+  h1Counted.innerHTML = findShortestPath(pos1, pos2, dim);
 });
-
 //find Shortest Path
 //
 //
@@ -300,12 +342,13 @@ function findShortestPath(x, y, dimensions) {
     const { x, y, path } = queue.shift();
 
     if (x === endPos[0] && y === endPos[1]) {
-      console.log(endPos, "endPos");
-
       path.forEach(({ x, y }) => {
-        field.childNodes[x].childNodes[y].style.backgroundColor = "#66FFFF";
+        if (field.childNodes[x].childNodes[y].className == "start") {
+        } else {
+          field.childNodes[x].childNodes[y].className = "footPrints";
+        }
       });
-      return;
+      return path.length;
     }
 
     for (const [dx, dy] of directions) {
@@ -325,14 +368,12 @@ function findShortestPath(x, y, dimensions) {
         ) {
           visited[newX][newY] = true;
           queue.push({ x: newX, y: newY, path: [...path, { x, y }] });
-          console.log("desilo se nes");
         } else if (
           x < newX &&
           !parseInt(field.childNodes[newX].childNodes[newY].style.borderTop[0])
         ) {
           visited[newX][newY] = true;
           queue.push({ x: newX, y: newY, path: [...path, { x, y }] });
-          console.log("desilo se nes");
         } else if (
           y > newY &&
           !parseInt(
@@ -341,7 +382,6 @@ function findShortestPath(x, y, dimensions) {
         ) {
           visited[newX][newY] = true;
           queue.push({ x: newX, y: newY, path: [...path, { x, y }] });
-          console.log("desilo se nes");
         } else if (
           x > newX &&
           !parseInt(
@@ -350,7 +390,6 @@ function findShortestPath(x, y, dimensions) {
         ) {
           visited[newX][newY] = true;
           queue.push({ x: newX, y: newY, path: [...path, { x, y }] });
-          console.log("desilo se nes");
         }
       }
     }

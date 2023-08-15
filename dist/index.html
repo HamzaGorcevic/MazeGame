@@ -9,26 +9,29 @@
   </head>
   <body>
     <div
-      class="relative h-[100vh] w-[100%] bg-blue-600 flex justify-center items-center"
+      class="h-[100vh] w-[100%] bg-blue-600 flex justify-center items-center container relative"
     >
+      <div class="information">
+        <h1>
+          <span class="textYM">Your moves:</span>
+          <span class="counter">0</span>
+        </h1>
+        <h1>
+          <span class="textYM">Your moves:</span>
+          <span class="textYM counted">0</span>
+        </h1>
+      </div>
       <div class="box">
         <select class="dif">
-          <option selected>Chose difficulty</option>
+          <option disabled selected>Chose difficulty</option>
           <option value="Hard">Hard</option>
           <option value="Normal">Normal</option>
           <option value="Easy">Easy</option>
         </select>
       </div>
-      <div class="box-ai">
-        <select class="alg">
-          <option selected>Chose Algorithm</option>
-          <option value="BFS">BFS</option>
-          <option value=""></option>
-          <option value=""></option>
-        </select>
-      </div>
+      <button class="box-ai">Call bot</button>
       <div
-        class="text-0 p-2 justify-center items-center h-[auto] field flex flex-wrap bg-blue-100 border-2 border-black"
+        class="text-0 p-2 px-0 justify-center items-center h-[auto] field flex flex-wrap"
       ></div>
     </div>
   </body>

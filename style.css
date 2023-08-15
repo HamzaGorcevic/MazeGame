@@ -6,8 +6,9 @@
 
 .dot,
 .start,
-.end {
-  width: 28px;
+.end,
+.footPrints {
+  width: 16px;
   height: 100%;
   display: inline-block;
   text-align: center;
@@ -20,15 +21,10 @@
 }
 
 .end {
-  background: linear-gradient(
-    rgb(242, 127, 127),
-    rgb(230, 123, 123),
-    rgb(236, 87, 87)
-  );
-}
-
-.field {
-  width: 800px;
+  background: url("./cheese.png");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .box,
@@ -57,4 +53,34 @@
 
 .box select option {
   padding: 30px;
+}
+
+.counter,
+.textYM {
+  font-size: 30px;
+  color: white;
+}
+.information {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  position: absolute;
+  top: 20%;
+  left: 10%;
+}
+
+.box-ai {
+  width: 200px;
+  padding: 10px;
+  background-color: rgb(51, 65, 171);
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.footPrints {
+  background: url("./footprints.png");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
