@@ -5,11 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="output.css" />
     <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="path/to/font-awesome/css/font-awesome.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barriecito&display=swap"
+      rel="stylesheet"
+    />
+
     <title>Document</title>
   </head>
   <body>
     <div
-      class="h-[100vh] w-[100%] bg-blue-600 flex justify-center items-center container relative"
+      class="h-[100vh] bg-blue-600 flex justify-center items-center container relative"
     >
       <div class="information">
         <h1>
@@ -17,17 +28,23 @@
           <span class="counter">0</span>
         </h1>
         <h1>
-          <span class="textYM">Your moves:</span>
+          <span class="textYM">Robot`s moves:</span>
           <span class="textYM counted">0</span>
         </h1>
       </div>
       <div class="box">
-        <select class="dif">
-          <option disabled selected>Chose difficulty</option>
-          <option value="Hard">Hard</option>
-          <option value="Normal">Normal</option>
-          <option value="Easy">Easy</option>
-        </select>
+        <h1 class="title">MAZE</h1>
+        <div class="difficulty">
+          <button value="Hard">
+            Hard<i class="fa-solid fa-play fa-beat"></i>
+          </button>
+          <button value="Normal">
+            Normal<i class="fa-solid fa-play fa-beat"></i>
+          </button>
+          <button value="Easy">
+            Easy<i class="fa-solid fa-play fa-beat"></i>
+          </button>
+        </div>
       </div>
       <button class="box-ai">Call bot</button>
       <div
@@ -35,5 +52,9 @@
       ></div>
     </div>
   </body>
+  <script
+    src="https://kit.fontawesome.com/fe35ef3554.js"
+    crossorigin="anonymous"
+  ></script>
   <script src="../app.js"></script>
 </html>

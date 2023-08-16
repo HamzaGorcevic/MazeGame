@@ -1,9 +1,26 @@
 let field = document.querySelector(".field");
-
+let counterH1 = document.querySelector(".counter");
 let endPos = [];
 let pos1 = 0;
 let pos2 = 0;
+let eventListenerToggle = false;
+field.setAttribute("tabindex", "0");
 function StartGame(len) {
+  console.log(len);
+  function clearField() {
+    pos1 = 0;
+    pos2 = 0;
+    endPos = [];
+
+    window.removeEventListener("keydown", MovingLogic);
+    eventListenerToggle = false;
+
+    while (field.firstChild) {
+      field.removeChild(field.firstChild);
+    }
+  }
+  clearField();
+
   let dimensions = len;
 
   const matrix = Array.from({ length: dimensions }, () =>
@@ -54,7 +71,6 @@ function StartGame(len) {
   }
 
   function CountingMoves(counter) {
-    let counterH1 = document.querySelector(".counter");
     counterH1.innerHTML = `${counter}`;
   }
 
@@ -187,13 +203,27 @@ function StartGame(len) {
       "0px solid red";
   }
   ////
+
   let start = field.childNodes[0].childNodes[0];
   start.className = "start";
 
   // Preload the image
 
+  window.addEventListener("keydown", MovingLogic);
+
   let counter = 0;
-  window.addEventListener("keydown", function (event) {
+
+  function MoveMe(pos1, pos2) {
+    field.querySelector(".start").classList.add("dot");
+    field.querySelector(".start").classList.remove("start");
+    field.childNodes[pos1].childNodes[pos2].className = "start";
+  }
+  // Exit
+  CountingMoves(counter);
+
+  function MovingLogic(event) {
+    console.log("called");
+    event.preventDefault();
     switch (event.key) {
       case "ArrowUp":
         if (
@@ -216,8 +246,8 @@ function StartGame(len) {
           field.childNodes[pos1 + 1].childNodes[pos2].style.borderTop[0] == 0
         ) {
           pos1++;
-          MoveMe(pos1, pos2);
           counter++;
+          MoveMe(pos1, pos2);
           CountingMoves(counter);
         } else {
         }
@@ -228,8 +258,8 @@ function StartGame(len) {
           field.childNodes[pos1].childNodes[pos2 - 1].style.borderRight[0] == 0
         ) {
           pos2--;
-          MoveMe(pos1, pos2);
           counter++;
+          MoveMe(pos1, pos2);
           CountingMoves(counter);
         } else {
         }
@@ -241,8 +271,8 @@ function StartGame(len) {
           field.childNodes[pos1].childNodes[pos2 + 1].style.borderLeft[0] == 0
         ) {
           pos2++;
-          MoveMe(pos1, pos2);
           counter++;
+          MoveMe(pos1, pos2);
           CountingMoves(counter);
         } else {
         }
@@ -252,64 +282,30 @@ function StartGame(len) {
         // Handle other key presses
         break;
     }
-  });
-
-  function MoveMe(pos1, pos2) {
-    field.querySelector(".start").classList.add("dot");
-    field.querySelector(".start").classList.remove("start");
-    console.log(pos1, pos2);
-    field.childNodes[pos1].childNodes[pos2].className = "start";
-  }
-}
-// Exit
-
-let selectDif = document.querySelector(".dif");
-
-selectDif.addEventListener("keydown", function (event) {
-  switch (event.key) {
-    case "ArrowUp":
-    case "ArrowDown":
-    case "ArrowLeft":
-    case "ArrowRight":
-      event.stopPropagation();
-      break;
-    default:
-      // Handle other key presses
-      break;
-  }
-});
-function clearField() {
-  pos1 = 0;
-  pos2 = 0;
-  endPos = [];
-  selectDif.selectedIndex = 0;
-  while (field.firstChild) {
-    field.removeChild(field.firstChild);
   }
 }
 
-selectDif.addEventListener("change", (el) => {
-  switch (el.target.value) {
-    case "Normal":
-      dim = 25;
-      clearField();
-      StartGame(dim);
+let dif = document.querySelector(".difficulty");
+let startScreen = document.querySelector(".box");
 
-      break;
-    case "Hard":
+let arrDif = Array.from(dif.childNodes);
+arrDif.map((el) => {
+  el.addEventListener("click", () => {
+    startScreen.style.display = "none";
+    if (el.value == "Hard") {
       dim = 35;
-      clearField();
+      StartGame(dim);
+    } else if (el.value == "Normal") {
+      dim = 25;
 
       StartGame(dim);
-
-      break;
-    case "Easy":
+    } else if (el.value == "Easy") {
       dim = 15;
-      clearField();
       StartGame(dim);
-      break;
-  }
+    }
+  });
 });
+
 callBot = document.querySelector(".box-ai");
 callBot.addEventListener("click", () => {
   let h1Counted = document.querySelector(".counted");

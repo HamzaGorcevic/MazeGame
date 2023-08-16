@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Barriecito", cursive;
 }
 
 .dot,
@@ -27,7 +28,42 @@
   background-repeat: no-repeat;
 }
 
-.box,
+.box {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  background: #0c356a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.difficulty {
+  width: 400px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.difficulty button {
+  color: #d5ffd0;
+  font-size: 3rem;
+  font-weight: bold;
+  width: 100%;
+  background: #279eff;
+  border-radius: 60px;
+  height: 20%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 8rem;
+  color: #40f8ff;
+}
 .box-ai {
   position: absolute;
   top: 10%;
