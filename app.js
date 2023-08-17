@@ -4,8 +4,26 @@ let endPos = [];
 let pos1 = 0;
 let pos2 = 0;
 let eventListenerToggle = false;
-field.setAttribute("tabindex", "0");
+let clock = document.querySelector(".clock");
+let gameFinsished = document.querySelector(".gameFinished");
+let btnReload = document.querySelector(".btnReload");
+let nmOfMoves = document.querySelector(".numberOfMoves");
+let showBestPath = document.querySelector(".showBestPath");
+let shortest = document.querySelector(".shortest");
+btnReload.addEventListener("click", () => {
+  location.reload();
+});
 function StartGame(len) {
+  showBestPath.addEventListener("click", () => {
+    let inner = findShortestPath(0, 0, len, 1);
+    shortest.innerHTML = `${inner}`;
+  });
+  let ticking = 0;
+
+  let tickingF = setInterval(() => {
+    ticking++;
+    clock.innerHTML = `${ticking}`;
+  }, 1000);
   console.log(len);
   function clearField() {
     pos1 = 0;
@@ -209,7 +227,16 @@ function StartGame(len) {
 
   // Preload the image
 
-  window.addEventListener("keydown", MovingLogic);
+  window.addEventListener("keydown", (el) => {
+    MovingLogic(el);
+    if (pos1 == endPos[0] && pos2 == endPos[1]) {
+      let clkEnd = document.querySelector(".clockEnd");
+      clkEnd.innerHTML = `${ticking}`;
+      clearInterval(tickingF);
+      gameFinsished.style.display = "flex";
+      nmOfMoves.innerHTML = `${counter}`;
+    }
+  });
 
   let counter = 0;
 
@@ -222,7 +249,6 @@ function StartGame(len) {
   CountingMoves(counter);
 
   function MovingLogic(event) {
-    console.log("called");
     event.preventDefault();
     switch (event.key) {
       case "ArrowUp":
@@ -314,7 +340,7 @@ callBot.addEventListener("click", () => {
 //find Shortest Path
 //
 //
-function findShortestPath(x, y, dimensions) {
+function findShortestPath(x, y, dimensions, color = 0) {
   let visited = [];
   for (let i = 0; i < dimensions; i++) {
     visited[i] = [];
@@ -341,7 +367,11 @@ function findShortestPath(x, y, dimensions) {
       path.forEach(({ x, y }) => {
         if (field.childNodes[x].childNodes[y].className == "start") {
         } else {
-          field.childNodes[x].childNodes[y].className = "footPrints";
+          if (color == 0) {
+            field.childNodes[x].childNodes[y].className = "footPrints";
+          } else {
+            field.childNodes[x].childNodes[y].className = "footPrintsAi";
+          }
         }
       });
       return path.length;
