@@ -19,13 +19,11 @@
     <title>Document</title>
   </head>
   <body>
-    <div
-      class="h-[100vh] bg-blue-600 flex justify-center items-center container relative"
-    >
+    <div class="kontainer">
       <div class="information">
         <h1>
           <span class="textYM">Your moves:</span>
-          <span class="counter">0</span>
+          <span class="counter textYM">0</span>
         </h1>
         <h1>
           <span class="textYM">Robot`s help:</span>
@@ -57,12 +55,15 @@
           </button>
         </div>
       </div>
-      <button class="box-ai">
-        Call bot <i class="fa-solid fa-robot fa-beat"></i>
-      </button>
-      <button class="box-ai showBestPath">
-        Show best path <i class="fa-solid fa-crosshairs fa-beat"></i>
-      </button>
+      <h1 class="textYM toggler"><i class="fa-solid fa-gear fa-beat"></i></h1>
+      <div class="Toggle">
+        <button class="box-ai">
+          Call bot <i class="fa-solid fa-robot fa-beat"></i>
+        </button>
+        <button class="box-ai showBestPath">
+          Show best path <i class="fa-solid fa-crosshairs fa-beat"></i>
+        </button>
+      </div>
       <div
         class="text-0 p-2 px-0 justify-center items-center h-[auto] field flex flex-wrap"
       ></div>

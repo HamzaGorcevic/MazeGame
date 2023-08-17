@@ -5,6 +5,17 @@
   font-family: "Barriecito", cursive;
 }
 
+.kontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0c356a;
+  min-width: 100%;
+  min-height: 100vh;
+}
+.field {
+  margin: 20px;
+}
 .dot,
 .start,
 .end,
@@ -65,19 +76,11 @@
   font-size: 8rem;
   color: #40f8ff;
 }
-.box-ai {
-  position: absolute;
-  top: 10%;
-  left: 10%;
-}
-.box-ai {
-  left: 80%;
-  top: 10%;
-}
+
 .box select,
 .box-ai select {
   background-color: #0563af;
-  color: white;
+  color: #d5ffd0;
   padding: 12px;
   width: 250px;
   border: none;
@@ -92,7 +95,6 @@
   padding: 30px;
 }
 
-.counter,
 .textYM {
   font-size: 30px;
   color: #d5ffd0;
@@ -109,8 +111,9 @@
 .box-ai {
   width: 200px;
   padding: 10px;
-  background-color: rgb(51, 65, 171);
-  color: white;
+  background-color: #0c356a;
+  box-shadow: 1px 1px 1px 1px #d5ffd0;
+  color: #d5ffd0;
   font-weight: bold;
   border-radius: 10px;
   display: flex;
@@ -153,4 +156,55 @@
   width: 80%;
   background: #0c356a;
   font-size: 25px;
+}
+
+.Toggle {
+  display: flex;
+  width: 40%;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 17%;
+  flex-direction: column;
+  justify-content: space-around;
+  right: 4%;
+}
+.toggler {
+  display: none;
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  font-size: 40px !important;
+}
+@media screen and (max-width: 1000px) {
+  .field {
+    margin-top: 150px;
+  }
+
+  .toggler {
+    display: inline;
+  }
+  .Toggle {
+    display: none;
+  }
+
+  .information {
+    padding: 5px;
+    position: absolute;
+    width: 40%;
+    top: 10%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .textYM {
+    font-size: 20px;
+  }
+  .box-ai {
+    top: 0;
+  }
+  .showBestPath {
+    top: 10%;
+  }
 }

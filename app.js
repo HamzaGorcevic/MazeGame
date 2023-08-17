@@ -3,13 +3,21 @@ let counterH1 = document.querySelector(".counter");
 let endPos = [];
 let pos1 = 0;
 let pos2 = 0;
-let eventListenerToggle = false;
+let Toggler = document.querySelector(".toggler");
+let toggle = document.querySelector(".Toggle");
 let clock = document.querySelector(".clock");
 let gameFinsished = document.querySelector(".gameFinished");
 let btnReload = document.querySelector(".btnReload");
 let nmOfMoves = document.querySelector(".numberOfMoves");
 let showBestPath = document.querySelector(".showBestPath");
 let shortest = document.querySelector(".shortest");
+
+let tCheck = true;
+Toggler.addEventListener("click", () => {
+  tCheck = !tCheck;
+  toggle.style.display = tCheck ? "none" : "flex";
+});
+
 btnReload.addEventListener("click", () => {
   location.reload();
 });
